@@ -18,11 +18,19 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const uri = process.env.uri;
 //connection
-mongoose
-  .connect(uri)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Mongo error", err));
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,  // Ensure SSL is enabled
+  sslValidate: true,  // Validate the SSL certificate
+  connectTimeoutMS: 30000,  // 30 seconds
+  socketTimeoutMS: 30000,   // 30 seconds
+};
 
+mongoose.connect(uri, options).then(
+  () => { console.log('Connected to MongoDB'); },
+  err => { console.error('Error connecting to MongoDB:', err); }
+);
 //let gfs;
 
 // mongoose.connection.once("open", () => {
