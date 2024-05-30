@@ -1,0 +1,18 @@
+[
+  {
+    "id": "112",
+    "name": "Grapes",
+    "image": "http://localhost:3003/images/subcategories/Agriculture/Fruits/Grapes.jpg",
+    "price": 50,
+    "quantity": 180,
+    "total_price": 9000
+  },
+  {
+    "id": "111",
+    "name": "Apple",
+    "image": "http://localhost:3003/images/subcategories/Agriculture/Fruits/Apple.jpg",
+    "price": 80,
+    "quantity": 154,
+    "total_price": 12320
+  }
+]

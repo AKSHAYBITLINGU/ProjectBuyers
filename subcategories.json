@@ -1,0 +1,10 @@
+{
+    "Agriculture": [
+        { "id": 11, "name": "Fruits", "image": "Fruits","rid":1 },
+        { "id": 12, "name": "Vegetables", "image": "Vegetables","rid":1 }
+    ],
+    "Electronics": [
+        { "id": 21, "name": "Electronics1", "image": "Electronics1","rid":2 },
+        { "id": 22, "name": "Electronics2", "image": "Electronics2","rid":2 }
+    ]
+}
