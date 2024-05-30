@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "postinstall": "npm rebuild bcrypt"
+  },
+  "engines": {
+    "node": "20.11.1" 
   },
   "author": "Akshay Bitlingu",
   "license": "ISC",
