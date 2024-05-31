@@ -18,23 +18,49 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const uri = process.env.uri;
 //connection
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  tls: true,  // Enable TLS/SSL
-  tlsCAFile: process.env.MONGODB_CA_FILE,  // Path to CA file if needed
-  connectTimeoutMS: 30000,  // 30 seconds connection timeout
-  socketTimeoutMS: 30000,   // 30 seconds socket timeout
-};
+// const options = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   tls: true,  // Enable TLS/SSL
+//   tlsCAFile: process.env.MONGODB_CA_FILE,  // Path to CA file if needed
+//   connectTimeoutMS: 30000,  // 30 seconds connection timeout
+//   socketTimeoutMS: 30000,   // 30 seconds socket timeout
+// };
 
-mongoose.connect(uri, options)
-  .then(() => console.log('Successfully connected to MongoDB'))
-  .catch(err => {
-    console.error('Error connecting to MongoDB:', err);
-    if (err.name === 'MongoNetworkError' || err.name === 'MongoServerSelectionError') {
-      console.error('Network-related error. Please check your network connection and MongoDB server configuration.');
-    }
-  });
+// mongoose.connect(uri, options)
+//   .then(() => console.log('Successfully connected to MongoDB'))
+//   .catch(err => {
+//     console.error('Error connecting to MongoDB:', err);
+//     if (err.name === 'MongoNetworkError' || err.name === 'MongoServerSelectionError') {
+//       console.error('Network-related error. Please check your network connection and MongoDB server configuration.');
+//     }
+//   });
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
 //let gfs;
 
 // mongoose.connection.once("open", () => {
