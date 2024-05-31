@@ -18,19 +18,23 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const uri = process.env.uri;
 //connection
-// const options = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   tls: true,  
-//   tlsInsecure: false,  // Ensure server certificate validation
-//   connectTimeoutMS: 30000,  // 30 seconds connection timeout
-//   socketTimeoutMS: 30000,   // 30 seconds socket timeout
-// };
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  tls: true,  // Enable TLS/SSL
+  tlsCAFile: process.env.MONGODB_CA_FILE,  // Path to CA file if needed
+  connectTimeoutMS: 30000,  // 30 seconds connection timeout
+  socketTimeoutMS: 30000,   // 30 seconds socket timeout
+};
 
-mongoose.connect(uri).then(
-  () => { console.log('Connected to MongoDB'); },
-  err => { console.error('Error connecting to MongoDB:', err); }
-);
+mongoose.connect(uri, options)
+  .then(() => console.log('Successfully connected to MongoDB'))
+  .catch(err => {
+    console.error('Error connecting to MongoDB:', err);
+    if (err.name === 'MongoNetworkError' || err.name === 'MongoServerSelectionError') {
+      console.error('Network-related error. Please check your network connection and MongoDB server configuration.');
+    }
+  });
 //let gfs;
 
 // mongoose.connection.once("open", () => {
