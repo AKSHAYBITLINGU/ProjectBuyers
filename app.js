@@ -21,10 +21,10 @@ const uri = process.env.uri;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  ssl: true,  // Ensure SSL is enabled
-  sslValidate: true,  // Validate the SSL certificate
-  connectTimeoutMS: 30000,  // 30 seconds
-  socketTimeoutMS: 30000,   // 30 seconds
+  tls: true,  
+  tlsInsecure: false,  // Ensure server certificate validation
+  connectTimeoutMS: 30000,  // 30 seconds connection timeout
+  socketTimeoutMS: 30000,   // 30 seconds socket timeout
 };
 
 mongoose.connect(uri, options).then(
