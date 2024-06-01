@@ -8,8 +8,7 @@ const Product = require("../models/product");
 
 router.get("/", async (req, res) => {
   try {
-    // const categories = await Category.find();
-    const categories = [];
+    const categories = await Category.find();
     if (!Array.isArray(categories)) {
       return res.status(500).send("Invalid data format in categories"); // Error handling
     }
