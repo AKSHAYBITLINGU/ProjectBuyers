@@ -63,6 +63,14 @@ async function run() {
   }
 }
 run().catch(console.dir);
+const db = mongoose.connection;
+db.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+db.once('open', function() {
+    console.log("Connected to MongoDB!");
+});
+
 
 //let gfs;
 
