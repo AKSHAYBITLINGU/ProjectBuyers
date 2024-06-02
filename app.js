@@ -36,40 +36,40 @@ const uri = process.env.uri;
 //     }
 //   });
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+// const { MongoClient, ServerApiVersion } = require('mongodb');
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-  serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-    connectTimeoutMS: 10000
-});
+// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// const client = new MongoClient(uri, {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   },
+//   serverSelectionTimeoutMS: 5000,
+//     socketTimeoutMS: 45000,
+//     connectTimeoutMS: 10000
+// });
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-const db = mongoose.connection;
-db.on('error', (err) => {
-    console.error('MongoDB connection error:', err);
-});
-db.once('open', function() {
-    console.log("Connected to MongoDB!");
-});
+// async function run() {
+//   try {
+//     // Connect the client to the server	(optional starting in v4.7)
+//     await client.connect();
+//     // Send a ping to confirm a successful connection
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
+// const db = mongoose.connection;
+// db.on('error', (err) => {
+//     console.error('MongoDB connection error:', err);
+// });
+// db.once('open', function() {
+//     console.log("Connected to MongoDB!");
+// });
 
 
 //let gfs;
@@ -93,6 +93,10 @@ db.once('open', function() {
 // });
 
 // const upload = multer({ storage });
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use(
   session({
@@ -344,4 +348,7 @@ async function linkProductToSubCategory(
 // Start the server
 app.listen(3003, () => {
   console.log("Server listening on port 3003");
+  mongoose.connect(uri).then(() => {
+    console.log("Database Connected");
+  });
 });
