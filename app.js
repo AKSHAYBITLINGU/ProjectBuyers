@@ -347,8 +347,8 @@ async function linkProductToSubCategory(
 // linkProductToSubCategory('Fruits',111,'Apple', 40, 5500, 'Apple');
 
 // Start the server
-app.listen(3003, () => {
-  console.log("Server listening on port 3003");
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
   mongoose.connect(uri).then(() => {
     console.log("Database Connected");
   });
