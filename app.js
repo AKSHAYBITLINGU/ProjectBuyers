@@ -17,6 +17,7 @@ const secretKey = process.env.JWT_SECRET_KEY;
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const uri = process.env.uri;
+const port = process.env.PORT;
 //connection
 // const options = {
 //   useNewUrlParser: true,
